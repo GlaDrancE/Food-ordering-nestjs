@@ -10,6 +10,8 @@ A small **NestJS + GraphQL** API for a food-ordering flow: users browse restaura
 git clone <repo-url>
 cd Food-ordering-nestjs
 pnpm install
+npx prisma generate
+npx prisma migrate deploy (optional, if got problem with any migrations)
 pnpm start:dev
 ```
 
