@@ -12,6 +12,7 @@ cd Food-ordering-nestjs
 pnpm install
 npx prisma generate
 npx prisma migrate deploy (optional, if got problem with any migrations)
+npx tsx ./prisma/seed.ts
 pnpm start:dev
 ```
 
