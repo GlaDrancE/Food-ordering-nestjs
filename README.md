@@ -53,6 +53,51 @@ Rough Schema
 
 ---
 
+## GraphQL API
+
+Single endpoint: `POST http://localhost:3000/graphql`. All operations (except `signUp` and `login`) require the `Authorization: Bearer <accessToken>` header.
+
+### Queries
+
+| Operation | Arguments | Returns | Auth / role |
+|-----------|-----------|--------|-------------|
+| `me` | — | `User` | JWT |
+| `myOrders` | — | `[Order]` | JWT |
+| `order` | `id: Int!` | `Order` | JWT |
+| `myCart` | — | `Cart` (nullable) | JWT |
+| `restaurants` | — | `[Restaurant]` | JWT |
+| `restaurant` | `id: Int!` | `Restaurant` | JWT |
+| `menuItemsByRestaurant` | `restaurantId: Int!` | `[MenuItem]` | JWT |
+| `paymentMethods` | — | `[PaymentMethod]` | JWT + ADMIN |
+
+### Mutations
+
+| Operation | Arguments | Returns | Auth / role |
+|-----------|-----------|--------|-------------|
+| `signUp` | `input: SignUpInput!` | `AuthResponse` | — |
+| `login` | `input: LoginInput!` | `AuthResponse` | — |
+| `addToCart` | `menuItemId: Int!`, `quantity: Int!` | `Cart` (nullable) | JWT |
+| `updateCartItem` | `cartItemId: Int!`, `quantity: Int!` | `Cart` (nullable) | JWT |
+| `removeCartItem` | `cartItemId: Int!` | `Cart` (nullable) | JWT |
+| `clearCart` | — | `Cart` (nullable) | JWT |
+| `createOrderFromCart` | — | `Order` | JWT |
+| `checkoutOrder` | `orderId: Int!`, `paymentMethodId: Int!` | `Order` | JWT + ADMIN/MANAGER |
+| `cancelOrder` | `orderId: Int!` | `Order` | JWT + ADMIN/MANAGER |
+| `createPaymentMethod` | `input: CreatePaymentMethodInput!` | `PaymentMethod` | JWT + ADMIN |
+| `updatePaymentMethod` | `input: UpdatePaymentMethodInput!` | `PaymentMethod` | JWT + ADMIN |
+| `deletePaymentMethod` | `id: Int!` | `Boolean` | JWT + ADMIN |
+
+### Input types (summary)
+
+- **SignUpInput:** `email: String!`, `password: String!`, `country: Country!`, `role: Role` (optional, defaults to MEMBER). Enums: `Country` = `INDIA` \| `AMERICA`, `Role` = `ADMIN` \| `MANAGER` \| `MEMBER`.
+- **LoginInput:** `email: String!`, `password: String!`.
+- **CreatePaymentMethodInput:** `type: PaymentType!` (`CARD` \| `UPI` \| `WALLET`), `provider: String!`, `last4: String` (optional).
+- **UpdatePaymentMethodInput:** `id: Int!`, plus optional `type`, `provider`, `last4`.
+
+Use the built-in **GraphQL Playground** at http://localhost:3000/graphql to explore the full schema (types, enums, and nested fields).
+
+---
+
 ## What’s intentionally simplified
 
 Trade-offs made for faster development in this challenge:
@@ -63,8 +108,9 @@ Trade-offs made for faster development in this challenge:
 - **Validation:** Basic input validation; no rate limiting, request signing, or strict schema versioning.
 - **DB:** Prisma + Postgres with straightforward schema; no read replicas, caching, or migrations strategy for zero-downtime.
 - **API:** GraphQL only; no REST, no versioning, no OpenAPI export.
+- **Test Coverage:** As per the time constraint, I wanted to finish this assignment asap, which is the reason, I didn't focused on test coverage of application
 
-These are called out so it’s clear what you’d add (token rotation, proper payments, etc.) in a real product.
+These are called out so it’s clear what you’d add (token rotation, proper payments, test coverage, etc.) in a real product.
 
 ---
 
