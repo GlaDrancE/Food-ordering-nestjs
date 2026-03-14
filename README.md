@@ -8,7 +8,7 @@ A small **NestJS + GraphQL** API for a food-ordering flow: users browse restaura
 
 ```bash
 git clone <repo-url>
-cd slooze-backend-challenge
+cd Food-ordering-nestjs
 pnpm install
 pnpm start:dev
 ```
