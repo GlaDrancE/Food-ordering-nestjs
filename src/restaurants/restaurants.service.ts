@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Country } from '../common/enums/country.enum';
+import { Country } from '../../generated/prisma/enums';
 
 interface CurrentUser {
   id: string;
@@ -9,7 +9,7 @@ interface CurrentUser {
 
 @Injectable()
 export class RestaurantsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async findAllForUser(user: CurrentUser) {
     return this.prisma.restaurant.findMany({
