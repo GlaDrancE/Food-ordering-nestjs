@@ -13,7 +13,10 @@ export class SignUpInput {
   @MinLength(8)
   password: string;
 
-  @Field(() => Role, { nullable: true, description: 'Defaults to MEMBER when not provided' })
+  @Field(() => Role, {
+    nullable: true,
+    description: 'Defaults to MEMBER when not provided',
+  })
   @IsEnum(Role)
   role?: Role;
 
@@ -21,4 +24,3 @@ export class SignUpInput {
   @IsEnum(Country)
   country: Country;
 }
-

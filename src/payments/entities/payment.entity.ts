@@ -27,4 +27,3 @@ export class Payment {
   @Field(() => Date)
   updatedAt: Date;
 }
-

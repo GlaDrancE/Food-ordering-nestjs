@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Country } from '../../generated/prisma/enums';
 import { Role } from '../../generated/prisma/enums';
@@ -12,7 +16,7 @@ interface CurrentUser {
 
 @Injectable()
 export class OrdersService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async myOrders(user: CurrentUser) {
     return this.prisma.order.findMany({
@@ -51,7 +55,8 @@ export class OrdersService {
 
     const isOwner = order.userId === (user.id as any);
     const isPrivileged =
-      (user.role === Role.ADMIN || user.role === Role.MANAGER) && order.country === user.country;
+      (user.role === Role.ADMIN || user.role === Role.MANAGER) &&
+      order.country === user.country;
 
     if (!isOwner && !isPrivileged) {
       throw new ForbiddenException('You cannot access this order');
@@ -85,7 +90,9 @@ export class OrdersService {
 
     for (const item of cart.items) {
       if (item.menuItem.restaurant.country !== user.country) {
-        throw new ForbiddenException('Cart contains items from another country');
+        throw new ForbiddenException(
+          'Cart contains items from another country',
+        );
       }
     }
 
@@ -128,9 +135,15 @@ export class OrdersService {
     });
   }
 
-  async checkoutOrder(orderId: number, paymentMethodId: number, user: CurrentUser) {
+  async checkoutOrder(
+    orderId: number,
+    paymentMethodId: number,
+    user: CurrentUser,
+  ) {
     if (user.role !== Role.ADMIN && user.role !== Role.MANAGER) {
-      throw new ForbiddenException('Only admins and managers can checkout orders');
+      throw new ForbiddenException(
+        'Only admins and managers can checkout orders',
+      );
     }
 
     const order = await this.prisma.order.findUnique({
@@ -142,7 +155,9 @@ export class OrdersService {
     }
 
     if (order.country !== user.country) {
-      throw new ForbiddenException('You cannot checkout orders from another country');
+      throw new ForbiddenException(
+        'You cannot checkout orders from another country',
+      );
     }
 
     if (order.status !== OrderStatus.PENDING) {
@@ -165,7 +180,7 @@ export class OrdersService {
           amount: order.totalAmount,
           status: 'SUCCESS' as any,
           providerRef: `mock-${Date.now()}`,
-          paymentMethodId: paymentMethodId
+          paymentMethodId: paymentMethodId,
         },
       });
 
@@ -187,7 +202,9 @@ export class OrdersService {
 
   async cancelOrder(orderId: number, user: CurrentUser) {
     if (user.role !== Role.ADMIN && user.role !== Role.MANAGER) {
-      throw new ForbiddenException('Only admins and managers can cancel orders');
+      throw new ForbiddenException(
+        'Only admins and managers can cancel orders',
+      );
     }
 
     const order = await this.prisma.order.findUnique({
@@ -206,7 +223,9 @@ export class OrdersService {
     }
 
     if (order.country !== user.country) {
-      throw new ForbiddenException('You cannot cancel orders from another country');
+      throw new ForbiddenException(
+        'You cannot cancel orders from another country',
+      );
     }
 
     if (order.status === OrderStatus.CANCELLED) {
@@ -228,4 +247,3 @@ export class OrdersService {
     });
   }
 }
-

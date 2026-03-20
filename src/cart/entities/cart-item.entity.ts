@@ -18,4 +18,3 @@ export class CartItem {
   @Field(() => MenuItem)
   menuItem: MenuItem;
 }
-

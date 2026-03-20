@@ -9,4 +9,3 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return gqlContext.getContext().req;
   }
 }
-

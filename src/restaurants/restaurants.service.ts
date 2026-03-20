@@ -9,7 +9,7 @@ interface CurrentUser {
 
 @Injectable()
 export class RestaurantsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async findAllForUser(user: CurrentUser) {
     return this.prisma.restaurant.findMany({
@@ -50,4 +50,3 @@ export class RestaurantsService {
     });
   }
 }
-

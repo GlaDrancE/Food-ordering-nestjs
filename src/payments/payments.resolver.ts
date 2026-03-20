@@ -12,7 +12,7 @@ import { UpdatePaymentMethodInput } from './dto/update-payment-method.input';
 
 @Resolver()
 export class PaymentsResolver {
-  constructor(private readonly paymentsService: PaymentsService) { }
+  constructor(private readonly paymentsService: PaymentsService) {}
 
   @Query(() => [PaymentMethod])
   @UseGuards(JwtAuthGuard, RolesGuard)

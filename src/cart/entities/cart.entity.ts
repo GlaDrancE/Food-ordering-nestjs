@@ -16,6 +16,9 @@ export class Cart {
   @Field(() => [CartItem])
   items: CartItem[];
 
+  @Field(() => Boolean)
+  sharable: boolean;
+
   @Field(() => Date)
   createdAt: Date;
 
@@ -23,3 +26,11 @@ export class Cart {
   updatedAt: Date;
 }
 
+@ObjectType()
+export class SharableCart {
+  @Field(() => Cart)
+  cart: Cart;
+
+  @Field(() => [Cart])
+  sharableCart: Cart[];
+}

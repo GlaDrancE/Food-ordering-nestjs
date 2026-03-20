@@ -13,7 +13,7 @@ interface CreateUserParams {
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async findByEmail(email: string): Promise<PrismaUser | null> {
     return this.prisma.user.findUnique({ where: { email } });
@@ -36,4 +36,3 @@ export class UsersService {
     });
   }
 }
-

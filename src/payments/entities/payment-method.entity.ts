@@ -29,4 +29,3 @@ export class PaymentMethod {
   @Field(() => Date)
   updatedAt: Date;
 }
-

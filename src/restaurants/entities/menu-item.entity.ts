@@ -18,4 +18,3 @@ export class MenuItem {
   @Field(() => Int)
   restaurantId: number;
 }
-

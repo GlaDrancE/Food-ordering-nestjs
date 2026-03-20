@@ -6,6 +6,6 @@ import { PrismaModule } from '../../prisma/prisma.module';
 @Module({
   imports: [PrismaModule],
   providers: [CartResolver, CartService],
+  exports: [CartService],
 })
 export class CartModule {}
-

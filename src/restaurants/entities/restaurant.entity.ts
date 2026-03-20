@@ -28,4 +28,3 @@ export class Restaurant {
   @Field(() => [MenuItem])
   menuItems: MenuItem[];
 }
-

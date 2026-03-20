@@ -97,6 +97,8 @@ model Cart {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 
+  sharable Boolean @default(false)
+
   items CartItem[]
 
   createdAt DateTime @default(now())

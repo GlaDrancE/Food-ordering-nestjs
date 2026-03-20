@@ -9,4 +9,3 @@ export class AuthResponse {
   @Field(() => User)
   user: User;
 }
-

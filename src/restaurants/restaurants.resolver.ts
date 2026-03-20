@@ -34,4 +34,3 @@ export class RestaurantsResolver {
     return this.restaurantsService.menuItemsByRestaurant(restaurantId, user);
   }
 }
-

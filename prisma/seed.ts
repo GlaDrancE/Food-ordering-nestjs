@@ -1,10 +1,10 @@
 import { PrismaClient, Country } from 'generated/prisma/client';
-import { PrismaPg } from "@prisma/adapter-pg";
-import dotenv from "dotenv"
-import path from "path"
+import { PrismaPg } from '@prisma/adapter-pg';
+import dotenv from 'dotenv';
+import path from 'path';
 
-dotenv.config({ path: path.join(__dirname, "../.env") })
-console.log(process.env.DATABASE_URL)
+dotenv.config({ path: path.join(__dirname, '../.env') });
+console.log(process.env.DATABASE_URL);
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
 });
@@ -35,6 +35,28 @@ async function main() {
           },
           {
             name: 'Paneer Tikka',
+            price: 280,
+            description: 'Grilled cottage cheese with spices.',
+          },
+        ],
+      },
+    },
+    include: { menuItems: true },
+  });
+  const indiaRestaurant2 = await prisma.restaurant.create({
+    data: {
+      name: 'Chennai Spice House',
+      country: Country.INDIA,
+      description: 'Classic Indian dishes with a modern twist.',
+      menuItems: {
+        create: [
+          {
+            name: ' Chicken',
+            price: 350,
+            description: 'Creamy tomato-based curry with tender chicken.',
+          },
+          {
+            name: ' Tikka',
             price: 280,
             description: 'Grilled cottage cheese with spices.',
           },
@@ -81,4 +103,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-

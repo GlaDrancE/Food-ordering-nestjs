@@ -1,4 +1,9 @@
-import { Field, HideField, ObjectType, registerEnumType } from '@nestjs/graphql';
+import {
+  Field,
+  HideField,
+  ObjectType,
+  registerEnumType,
+} from '@nestjs/graphql';
 import { Role } from '../../../generated/prisma/enums';
 import { Country } from '../../../generated/prisma/enums';
 
@@ -28,4 +33,3 @@ export class User {
   @Field(() => Date)
   updatedAt: Date;
 }
-

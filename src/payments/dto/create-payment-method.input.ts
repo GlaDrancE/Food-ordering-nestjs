@@ -15,4 +15,3 @@ export class CreatePaymentMethodInput {
   @Field(() => Int, { nullable: true })
   userIdOverride?: number;
 }
-

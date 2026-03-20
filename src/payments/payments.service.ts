@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Country } from '../../generated/prisma/enums';
 import { Role } from '../../generated/prisma/enums';
@@ -12,7 +16,7 @@ interface CurrentUser {
 
 @Injectable()
 export class PaymentsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   private assertAdmin(user: CurrentUser) {
     if (user.role !== Role.ADMIN) {
@@ -44,8 +48,13 @@ export class PaymentsService {
     });
   }
 
-  async updatePaymentMethod(id: number, input: { type?: string; last4?: string; provider?: string }) {
-    const existing = await this.prisma.paymentMethod.findUnique({ where: { id } });
+  async updatePaymentMethod(
+    id: number,
+    input: { type?: string; last4?: string; provider?: string },
+  ) {
+    const existing = await this.prisma.paymentMethod.findUnique({
+      where: { id },
+    });
     if (!existing) {
       throw new NotFoundException('Payment method not found');
     }
@@ -61,7 +70,9 @@ export class PaymentsService {
   }
 
   async deletePaymentMethod(id: number) {
-    const existing = await this.prisma.paymentMethod.findUnique({ where: { id } });
+    const existing = await this.prisma.paymentMethod.findUnique({
+      where: { id },
+    });
     if (!existing) {
       throw new NotFoundException('Payment method not found');
     }
@@ -70,4 +81,3 @@ export class PaymentsService {
     return true;
   }
 }
-

@@ -22,4 +22,3 @@ export class OrderItem {
   @Field(() => MenuItem)
   menuItem: MenuItem;
 }
-

@@ -10,7 +10,7 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
 @Resolver(() => Order)
 export class OrdersResolver {
-  constructor(private readonly ordersService: OrdersService) { }
+  constructor(private readonly ordersService: OrdersService) {}
 
   @Query(() => [Order])
   @UseGuards(JwtAuthGuard)
@@ -54,4 +54,3 @@ export class OrdersResolver {
     return this.ordersService.cancelOrder(orderId, user);
   }
 }
-
